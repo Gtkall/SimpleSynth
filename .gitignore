@@ -1,0 +1,3 @@
+# Project exclude paths
+/src/main/resources/simpleSynth-frontend/node_modules/
+/target/
