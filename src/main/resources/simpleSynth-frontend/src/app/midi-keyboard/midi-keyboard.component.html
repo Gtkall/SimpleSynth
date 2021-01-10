@@ -1,0 +1,16 @@
+<div class="container">
+  <div class="keyboard">
+    <mat-grid-list [cols]="keyboard.keys.size" rowHeight="100px">
+      <mat-grid-tile *ngFor="let key of keyboard.keys.entries()">
+        <button mat-button color="primary" 
+           (pointerdown)="onKeyPressed($event, key)"
+             (pointerup)="onKeyReleased($event, key)"
+           (pointerover)="onKeyPressed($event, key)"
+          (pointerleave)="onKeyReleased($event, key)"
+        >
+          {{key[0]}}
+        </button>
+      </mat-grid-tile>
+    </mat-grid-list>
+  </div>
+</div>

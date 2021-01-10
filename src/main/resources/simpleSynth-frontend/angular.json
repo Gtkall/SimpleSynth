@@ -122,5 +122,8 @@
       }
     }
   },
-  "defaultProject": "simpleSynth-frontend"
+  "defaultProject": "simpleSynth-frontend",
+  "cli": {
+    "analytics": false
+  }
 }
