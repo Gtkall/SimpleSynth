@@ -2,15 +2,30 @@
   <div class="keyboard">
     <mat-grid-list [cols]="keyboard.keys.size" rowHeight="100px">
       <mat-grid-tile *ngFor="let key of keyboard.keys.entries()">
-        <button mat-button color="primary" 
-           (pointerdown)="onKeyPressed($event, key)"
-             (pointerup)="onKeyReleased($event, key)"
-           (pointerover)="onKeyPressed($event, key)"
-          (pointerleave)="onKeyReleased($event, key)"
-        >
+
+        <button mat-flat-button color="primary" (pointerdown)="onKeyPressed($event, key)"
+          (pointerup)="onKeyReleased($event, key)" (pointerleave)="onKeyReleased($event, key)">
           {{key[0]}}
         </button>
+
       </mat-grid-tile>
     </mat-grid-list>
+
+
+
+
+    <mat-card>
+
+      <mat-card-content>
+
+        <h2>Volume</h2>
+
+        <mat-slider color="primary" min="0" max="1" step="0.01" value="1" thumbLabel
+          (valueChange)="onVolumeChange($event)"></mat-slider>
+
+      </mat-card-content>
+
+    </mat-card>
+
   </div>
 </div>
