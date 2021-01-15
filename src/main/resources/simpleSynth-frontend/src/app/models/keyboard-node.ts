@@ -71,4 +71,10 @@ export class KeyboardNode {
     changeVolume(volume: number): void {
         this.gainNode.gain.value = volume;
     }
+
+    changeWaveform(waveform: OscillatorType): void {
+        this.oscList.forEach(osc => {
+            osc.type = waveform;
+        });
+    }
 }

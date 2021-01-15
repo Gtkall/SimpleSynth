@@ -1,4 +1,5 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { MatButtonToggleChange } from '@angular/material/button-toggle';
 import { AudioMapNodeControl, AudioNodeMode, AudioMapNodeOptions } from '../interfaces/audio-map-node-control.interface';
 import { KeyboardOptions } from '../interfaces/keyboard-options.interface';
 import { KeyboardNode } from '../models/keyboard-node';
@@ -110,5 +111,9 @@ export class MidiKeyboardComponent implements OnInit, AudioMapNodeControl {
 
   onVolumeChange(value: number): void {
     this.kbdNode.changeVolume(value);
+  }
+
+  onWaveformChange(event: any): void {
+    this.kbdNode.changeWaveform(event.value);
   }
 }

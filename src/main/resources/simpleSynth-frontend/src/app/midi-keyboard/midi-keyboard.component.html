@@ -11,21 +11,21 @@
       </mat-grid-tile>
     </mat-grid-list>
 
+    <div class="volume-slider">
+      <h2>Volume</h2>
+      <mat-slider color="primary" min="0" max="1" step="0.01" value="1" thumbLabel (valueChange)="onVolumeChange($event)">
+      </mat-slider>
+    </div>
 
-
-
-    <mat-card>
-
-      <mat-card-content>
-
-        <h2>Volume</h2>
-
-        <mat-slider color="primary" min="0" max="1" step="0.01" value="1" thumbLabel
-          (valueChange)="onVolumeChange($event)"></mat-slider>
-
-      </mat-card-content>
-
-    </mat-card>
+    <div class="waveform-picker">
+      <h2>Waveform Picker</h2>
+      <mat-button-toggle-group (change)="onWaveformChange($event)">
+        <mat-button-toggle value="sine">sine</mat-button-toggle>
+        <mat-button-toggle value="sawtooth">sawtooth</mat-button-toggle>
+        <mat-button-toggle value="square">square</mat-button-toggle>
+        <mat-button-toggle value="triangle">triangle</mat-button-toggle>
+      </mat-button-toggle-group>
+    </div>
 
   </div>
 </div>
