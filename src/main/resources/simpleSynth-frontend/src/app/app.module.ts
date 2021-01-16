@@ -11,11 +11,12 @@ import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { MatSliderModule } from '@angular/material/slider';
 import { MatCardModule } from '@angular/material/card';
 import { MatButtonToggleModule } from '@angular/material/button-toggle';
+import {MatToolbarModule} from '@angular/material/toolbar';
 
 @NgModule({
   declarations: [
     AppComponent,
-    MidiKeyboardComponent
+    MidiKeyboardComponent,
   ],
   imports: [
     BrowserModule,
@@ -26,7 +27,8 @@ import { MatButtonToggleModule } from '@angular/material/button-toggle';
     MatProgressSpinnerModule,
     MatSliderModule,
     MatCardModule,
-    MatButtonToggleModule
+    MatButtonToggleModule,
+    MatToolbarModule
 
   ],
   providers: [],
