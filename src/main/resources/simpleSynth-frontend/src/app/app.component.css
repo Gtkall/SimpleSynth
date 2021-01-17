@@ -1,5 +1,5 @@
-.align-center{
-  align-self: center;
+.align-flex-end{
+  align-self: flex-end;
 }
 .justify-center{
   justify-self: center;
@@ -7,4 +7,15 @@
 
 .flex{
   display: flex;
+}
+
+#header{
+  width: 100%;
+  height: 10%;
+  background: #424242;
+  display: flex;
+}
+
+#header h1{
+  color: gold;
 }

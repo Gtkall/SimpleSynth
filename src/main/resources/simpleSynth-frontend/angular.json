@@ -24,7 +24,7 @@
               "src/assets"
             ],
             "styles": [
-              "./node_modules/@angular/material/prebuilt-themes/pink-bluegrey.css",
+              "src/simple-synth-theme.css",
               "src/styles.css"
             ],
             "scripts": []
@@ -122,5 +122,8 @@
       }
     }
   },
-  "defaultProject": "simpleSynth-frontend"
+  "defaultProject": "simpleSynth-frontend",
+  "cli": {
+    "analytics": false
+  }
 }

@@ -1,8 +1,28 @@
-<div id="header" class="flex">
-  <h1 class="align-center justify-center">Welcome to SimpleSynth Application!</h1>
-</div>
+<header>
+  <mat-toolbar id="header" class="align-flex-end">
+    <mat-toolbar-row [ngClass]="title" class="text">SimpleSynth App</mat-toolbar-row>
+  </mat-toolbar>
+</header>
+<main id="main">
 
-<div>
-  <p>This is a second text</p>
-</div>
+  <div id="filterFlow" class="">
+
+  </div>
+
+  <mat-grid-list id="filterList" cols="2" rowHeight="16:9" gutterSize="20">
+<!--    <mat-grid-tile></mat-grid-tile>-->
+<!--    <mat-grid-tile></mat-grid-tile>-->
+<!--    <mat-grid-tile></mat-grid-tile>-->
+<!--    <mat-grid-tile></mat-grid-tile>-->
+  </mat-grid-list>
+
+  <app-midi-keyboard></app-midi-keyboard>
+</main>
+<footer id="footer" class="">
+  <div>
+    <p>Created By G.Karetas, O.Bousoulas</p>
+  </div>
+</footer>
+
+
 
