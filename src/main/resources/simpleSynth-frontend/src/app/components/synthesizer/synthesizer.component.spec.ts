@@ -1,20 +1,20 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { MidiKeyboardComponent } from './midi-keyboard.component';
+import { SynthesizerComponent } from './synthesizer.component';
 
 describe('MidiKeyboardComponent', () => {
-  let component: MidiKeyboardComponent;
-  let fixture: ComponentFixture<MidiKeyboardComponent>;
+  let component: SynthesizerComponent;
+  let fixture: ComponentFixture<SynthesizerComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ MidiKeyboardComponent ]
+      declarations: [ SynthesizerComponent ]
     })
     .compileComponents();
   });
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(MidiKeyboardComponent);
+    fixture = TestBed.createComponent(SynthesizerComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

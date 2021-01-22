@@ -1,0 +1,19 @@
+.osc-slider {
+    float: left;
+    width: 25%;
+}
+
+.volume-slider {
+    float: left;
+    width: 25%;
+}
+
+.waveform-picker {
+    float: left;
+    width: 50%;
+}
+
+.adsr-slider {
+    float: left;
+    width: 33%;
+}

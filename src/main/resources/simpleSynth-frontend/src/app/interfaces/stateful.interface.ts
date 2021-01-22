@@ -1,8 +1,8 @@
+
 export const enum state {
     CONSTRUCTED,
     INITIALIZED
 }
-
 export interface Stateful {
 
     state: state;
