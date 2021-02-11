@@ -1,5 +1,5 @@
 import { BrowserModule } from '@angular/platform-browser';
-import { NgModule } from '@angular/core';
+import { CUSTOM_ELEMENTS_SCHEMA, NgModule } from '@angular/core';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -13,10 +13,20 @@ import { MatCardModule } from '@angular/material/card';
 import { MatButtonToggleModule } from '@angular/material/button-toggle';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatSlideToggleModule } from '@angular/material/slide-toggle';
+import { MatMenuModule } from '@angular/material/menu';
+import { MatIconModule } from '@angular/material/icon';
+import { WindowComponent } from './components/window-manager/window/window.component';
+import { AnchorDirective } from './directives/anchor.directive';
+import { WorkspaceComponent } from './components/window-manager/workspace/workspace.component';
+import { ExampleComponent } from './components/stub/example/example.component';
 @NgModule({
   declarations: [
     AppComponent,
-    SynthesizerComponent
+    SynthesizerComponent,
+    WindowComponent,
+    AnchorDirective,
+    WorkspaceComponent,
+    ExampleComponent,
   ],
   imports: [
     BrowserModule,
@@ -29,10 +39,12 @@ import { MatSlideToggleModule } from '@angular/material/slide-toggle';
     MatCardModule,
     MatButtonToggleModule,
     MatToolbarModule,
-    MatSlideToggleModule
-
+    MatSlideToggleModule,
+    MatMenuModule,
+    MatIconModule
   ],
   providers: [],
-  bootstrap: [AppComponent]
+  bootstrap: [AppComponent],
+  schemas: [CUSTOM_ELEMENTS_SCHEMA]
 })
 export class AppModule { }

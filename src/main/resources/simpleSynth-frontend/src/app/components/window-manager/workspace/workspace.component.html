@@ -1,0 +1,11 @@
+<!-- The actual dynamically generated window array -->
+<ng-template (eventPropagator)="onWindowStateChange($any)" appAnchorHost></ng-template>
+
+<button name="module-selector" mat-icon-button [matMenuTriggerFor]="menu">
+  <mat-icon color="primary">add_box</mat-icon>
+  <mat-menu #menu="matMenu">
+    <button *ngFor="let component of componentsList" mat-menu-item (click)="onModuleSelected(component)">
+      <span>{{component.component.name}}</span>
+    </button>
+  </mat-menu>
+</button>

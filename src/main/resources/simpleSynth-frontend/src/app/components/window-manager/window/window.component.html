@@ -1,0 +1,32 @@
+<mat-card style="max-width: 400px; margin: 15px;">
+
+  <mat-card-title>
+    <!-- TODO: make this prettier -->
+    {{ componentRef.componentType.name }}
+  </mat-card-title>
+
+  <!-- The actual dynamically generated view -->
+  <mat-card-content>
+    <ng-template appAnchorHost></ng-template>
+  </mat-card-content>
+
+  <mat-card-actions class="frame">
+    <button mat-icon-button class="frame-left" (click)="onMove('move_left')">
+      <mat-icon>arrow_back</mat-icon>
+    </button>
+    <button mat-icon-button class="frame-left" (click)="onMove('move_right')">
+      <mat-icon>arrow_forward</mat-icon>
+    </button>
+    <div style="flex-grow: 2;"></div>
+    <button mat-icon-button class="frame-right" (click)="onMinimize()">
+      <mat-icon>minimize</mat-icon>
+    </button>
+    <button mat-icon-button class="frame-right" (click)="onMaximize()">
+      <mat-icon>fullscreen</mat-icon>
+    </button>
+    <button mat-icon-button class="frame-right" (click)="onClose()">
+      <mat-icon>close</mat-icon>
+    </button>
+  </mat-card-actions>
+
+</mat-card>
