@@ -5,8 +5,6 @@ import { Directive, EventEmitter, Output, ViewContainerRef } from '@angular/core
 })
 export class AnchorDirective {
 
-  @Output() eventPropagator: EventEmitter<any> = new EventEmitter();
-
   constructor(public viewContainerRef: ViewContainerRef) { }
 
 }

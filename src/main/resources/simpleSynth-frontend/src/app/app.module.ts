@@ -19,6 +19,7 @@ import { WindowComponent } from './components/window-manager/window/window.compo
 import { AnchorDirective } from './directives/anchor.directive';
 import { WorkspaceComponent } from './components/window-manager/workspace/workspace.component';
 import { ExampleComponent } from './components/stub/example/example.component';
+import { Example2Component } from './components/stub/example2/example2.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -27,6 +28,7 @@ import { ExampleComponent } from './components/stub/example/example.component';
     AnchorDirective,
     WorkspaceComponent,
     ExampleComponent,
+    Example2Component,
   ],
   imports: [
     BrowserModule,
