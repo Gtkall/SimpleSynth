@@ -88,7 +88,12 @@ export class WorkspaceComponent implements OnInit {
       case 'close':
         this.closeWindow(payload.id);
         break;
-    
+      case 'move_left':
+        this.moveWindow(payload.id, 'move_left');
+        break;
+      case 'move_right':
+        this.moveWindow(payload.id, 'move_right');
+        break;
       default:
         break;
     }
@@ -120,5 +125,45 @@ export class WorkspaceComponent implements OnInit {
     this.updateComponentRefsFromWindowRefs(this.windows);
   }
 
+  moveWindow(id: string, direction: string): void {
+
+    const windowIndex = this.windows.findIndex((window) => {
+      return window.instance.id === id;
+    });
+    const temp = this.windows[windowIndex];
+    const windowViewIndex = this.appAnchorHost.viewContainerRef.indexOf(temp.hostView);
+
+    switch (direction) {
+      case 'move_left':
+        // out of bounds guard
+        if (windowIndex !== 0) {
+
+          // update the window reference array
+          this.windows[windowIndex] = this.windows[windowIndex - 1];
+          this.windows[windowIndex - 1] = temp;
+
+          // update the view container reference array
+          this.appAnchorHost.viewContainerRef.move(temp.hostView, windowViewIndex - 1);
+        }
+        break;
+      case 'move_right':
+        // out of bounds guard
+        if (windowIndex !== this.windows.length - 1) {
+
+          // update the window reference array
+          this.windows[windowIndex] = this.windows[windowIndex + 1];
+          this.windows[windowIndex + 1] = temp;
+
+          // update the view container reference array
+          this.appAnchorHost.viewContainerRef.move(temp.hostView, windowViewIndex + 1);
+        }
+        break;
+      default:
+        break;
+    }
+
+    // emit updated window array
+    this.updateComponentRefsFromWindowRefs(this.windows);
+  }
 
 }

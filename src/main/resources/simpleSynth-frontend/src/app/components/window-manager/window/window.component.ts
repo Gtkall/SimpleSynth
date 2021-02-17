@@ -120,12 +120,25 @@ export class WindowComponent implements OnInit, OnDestroy, OnChanges {
   }
 
   onMove(direction: string): void {
+
+    let payload: StateChangeByID;
+
     switch (direction) {
-      case 'move_right':
-        this.windowStateChanged.emit({id: this.id, stateChange: 'move_right'});
-        break;
       case 'move_left':
         this.windowStateChanged.emit({id: this.id, stateChange: 'move_left'});
+        payload = {
+          id: this.id,
+          stateChange: 'move_left'
+        };
+        this.statefulService.emitStateChange(payload);
+        break;
+      case 'move_right':
+        this.windowStateChanged.emit({id: this.id, stateChange: 'move_right'});
+        payload = {
+          id: this.id,
+          stateChange: 'move_right'
+        };
+        this.statefulService.emitStateChange(payload);
         break;
       default:
         break;
