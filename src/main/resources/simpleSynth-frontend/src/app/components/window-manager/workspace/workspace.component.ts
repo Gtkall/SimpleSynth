@@ -42,10 +42,13 @@ export class WorkspaceComponent implements OnInit {
    * @param component the kind of component selected
    */
   onModuleSelected(component: ComponentItem): void {
+
     const windowRef = this.loadWindow();
     windowRef.instance.componentItem = component;
     this.windows.push(windowRef);
+
     this.updateComponentRefsFromWindowRefs(this.windows);
+
   }
 
   /**
@@ -55,10 +58,11 @@ export class WorkspaceComponent implements OnInit {
    */
   updateComponentRefsFromWindowRefs(windowRefs: Array<ComponentRef<any>>)
   : Array<ComponentRef<any>> {
-    const componentRefs = new Array<ComponentRef<any>>();
-    windowRefs.forEach(element => {
-      componentRefs.push(element.instance.componentRef);
+    const componentRefs: typeof windowRefs = [];
+    windowRefs.forEach((element) => {
+      componentRefs.push(element.instance as ComponentRef<WindowComponent>);
     });
+
     this.componentRefsUpdated.emit(componentRefs);
     return componentRefs;
   }
@@ -97,8 +101,6 @@ export class WorkspaceComponent implements OnInit {
       default:
         break;
     }
-
-    
 
   }
 
