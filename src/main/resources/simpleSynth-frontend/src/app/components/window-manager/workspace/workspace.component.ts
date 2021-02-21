@@ -1,9 +1,9 @@
 import { Component, ComponentFactoryResolver, ComponentRef,
-  EventEmitter, Input, OnInit, Output, ViewChild, ViewRef } from '@angular/core';
+  EventEmitter, Input, OnInit, Output, ViewChild } from '@angular/core';
 import { AnchorDirective } from 'src/app/directives/anchor.directive';
-import { DataBindable } from 'src/app/interfaces/data-bindable.interface';
-import { StateChangeByID, StatefulEvent } from 'src/app/interfaces/stateful.interface';
+import { StateChangeByID } from 'src/app/interfaces/stateful.interface';
 import { ComponentItem } from 'src/app/models/component-item';
+import { NodeLikeComponent } from 'src/app/models/node-like-component';
 import { StatefulService } from 'src/app/services/stateful.service';
 import { WindowComponent } from '../window/window.component';
 
@@ -16,8 +16,9 @@ import { WindowComponent } from '../window/window.component';
 export class WorkspaceComponent implements OnInit {
 
   @Input() componentsList: Array<ComponentItem>;
+  @Input() maxWindowCount = -1;
   @ViewChild(AnchorDirective, {static: true}) appAnchorHost: AnchorDirective;
-  @Output() componentRefsUpdated: EventEmitter<Array<ComponentRef<any>>>
+  @Output() componentRefsUpdated: EventEmitter<Array<ComponentRef<NodeLikeComponent>>>
   = new EventEmitter();
 
   windows: Array<ComponentRef<WindowComponent>>;
@@ -27,7 +28,7 @@ export class WorkspaceComponent implements OnInit {
     this.statefulService.statefulEvent$.subscribe(
       payload => this.onWindowStateChanged(payload)
     );
-    this.windows = new Array();
+    this.windows = [...Array<ComponentRef<WindowComponent>>(0)];
   }
 
   ngOnInit(): void {
@@ -46,8 +47,12 @@ export class WorkspaceComponent implements OnInit {
     const windowRef = this.loadWindow();
     windowRef.instance.componentItem = component;
     this.windows.push(windowRef);
-
-    this.updateComponentRefsFromWindowRefs(this.windows);
+    
+    setTimeout(() => {
+      this.updateComponentRefsFromWindowRefs(this.windows);
+    }, 500);
+    console.log(this.windows);
+    
 
   }
 
@@ -56,15 +61,31 @@ export class WorkspaceComponent implements OnInit {
    * positioned, based on the window reference array
    * @param windowRefs the window reference array
    */
-  updateComponentRefsFromWindowRefs(windowRefs: Array<ComponentRef<any>>)
-  : Array<ComponentRef<any>> {
-    const componentRefs: typeof windowRefs = [];
-    windowRefs.forEach((element) => {
-      componentRefs.push(element.instance as ComponentRef<WindowComponent>);
-    });
+  updateComponentRefsFromWindowRefs(windowRefs: Array<ComponentRef<WindowComponent>>) {
+    // windowRefs.forEach((element) => {
+    //   componentRefs.push(element.instance.componentRef);
+    // });
+    // for (let index = 0; index < windowRefs.length; index++) {
+    //   componentRefs[index] = windowRefs[index].instance.componentRef;
+    // }
+    // let componentRefs: Array<ComponentRef<NodeLikeComponent>> = [...Array(windowRefs.length)];
+    // componentRefs = [...windowRefs.map((window) => window.instance.componentRef)];
 
-    this.componentRefsUpdated.emit(componentRefs);
-    return componentRefs;
+    // let componentRefs = Array.from(
+    //   {length: windowRefs.length}, (v = windowRefs, k) => windowRefs[k].instance.componentRef
+    // );
+
+    // let componentRefs: Array<ComponentRef<NodeLikeComponent>> = new Array<ComponentRef<NodeLikeComponent>>();
+    // componentRefs[0] = windowRefs[0].instance.componentRef;
+    // for (let index = 1; index < windowRefs.length; index++) {
+    //   componentRefs[index] = windowRefs[index].instance.componentRef;
+    // }
+
+    setTimeout(() => {
+      console.log(windowRefs.map(ref => ref.instance.componentRef));
+      
+    }, 1000);
+    this.componentRefsUpdated.emit(windowRefs.map(ref => ref.instance.componentRef));
   }
 
   /**

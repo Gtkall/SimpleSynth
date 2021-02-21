@@ -1,11 +1,20 @@
 <!-- The actual dynamically generated window array -->
-<ng-template appAnchorHost></ng-template>
+<ng-template class="container" appAnchorHost></ng-template>
 
-<button name="module-selector" mat-icon-button [matMenuTriggerFor]="menu">
+<button
+  name="module-selector"
+  mat-icon-button
+  [matMenuTriggerFor]="menu"
+  *ngIf="maxWindowCount !== windows.length"
+>
   <mat-icon color="primary">add_box</mat-icon>
   <mat-menu #menu="matMenu">
-    <button *ngFor="let component of componentsList" mat-menu-item (click)="onModuleSelected(component)">
-      <span>{{component.component.name}}</span>
+    <button
+      *ngFor="let component of componentsList"
+      mat-menu-item
+      (click)="onModuleSelected(component)"
+    >
+      <span>{{ component.component.name }}</span>
     </button>
   </mat-menu>
 </button>

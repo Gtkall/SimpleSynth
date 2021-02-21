@@ -25,6 +25,10 @@ export class ADSRNode extends MultiAudioNode implements AudioNodeLike {
             this.update_params(options);
         }
     }
+    
+    setAudioContext(ctx: BaseAudioContext): void {
+        throw new Error('Method not implemented.');
+    }
 
     update_params(options: ADSRoptions): void {
         this._attack = options.attack ? options.attack : this._attack;

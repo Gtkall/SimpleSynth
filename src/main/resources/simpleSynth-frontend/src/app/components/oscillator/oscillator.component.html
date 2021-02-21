@@ -1,0 +1,25 @@
+<div class="container">
+    
+  <div class="item">
+    <button
+      style="cursor: default"
+      mat-raised-button
+      color="primary"
+      (click)="onPlayButtonPressed()"
+    >
+      <mat-icon *ngIf="!isPlaying">play_circle</mat-icon>
+      <mat-icon *ngIf="isPlaying">stop</mat-icon>
+    </button>
+  </div>
+
+  <div class="item">
+    <h4>Waveform Picker</h4>
+    <mat-button-toggle-group (change)="onWaveformChanged($event)">
+      <mat-button-toggle checked value="sine">sine</mat-button-toggle>
+      <mat-button-toggle value="sawtooth">sawtooth</mat-button-toggle>
+      <mat-button-toggle value="square">square</mat-button-toggle>
+      <mat-button-toggle value="triangle">triangle</mat-button-toggle>
+    </mat-button-toggle-group>
+  </div>
+
+</div>

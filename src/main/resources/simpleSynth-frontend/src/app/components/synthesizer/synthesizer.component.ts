@@ -1,94 +1,93 @@
-import { Component, OnInit } from '@angular/core';
-import { ADSRoptions } from 'src/app/interfaces/adsr-options.interface';
-import { ADSRNode } from 'src/app/models/adsr-node';
-import { KeyboardNode } from '../../models/keyboard-node';
-import { Keyboard } from '../../models/keyboard.model';
+import { Component, ComponentRef, OnInit } from '@angular/core';
+import { ComponentItem } from 'src/app/models/component-item';
+import { NodeLikeComponent } from 'src/app/models/node-like-component';
+import { makeid } from 'src/app/utils/random-alphanumeric';
+import { MidiKeyboardComponent } from '../midi-keyboard/midi-keyboard.component';
+import { OscillatorComponent } from '../oscillator/oscillator.component';
 
 @Component({
   selector: 'app-synthesizer',
   templateUrl: './synthesizer.component.html',
-  styleUrls: ['./synthesizer.component.css']
+  styleUrls: ['./synthesizer.component.css'],
 })
 export class SynthesizerComponent implements OnInit {
+  readonly id: string = makeid(6);
+  ctx: AudioContext;
+  inputList: ComponentItem[];
 
-  id: string;
-  keyboard: Keyboard;
-
-  ctx: BaseAudioContext;
-  kbdNode: KeyboardNode;
-  adsrNode: ADSRNode;
-  adsrOptions: ADSRoptions;
-
+  inputRef: ComponentRef<NodeLikeComponent>;
+  filterRefs: ComponentRef<NodeLikeComponent>[];
+  componentRefs: ComponentRef<NodeLikeComponent>[];
 
   constructor() {
+    this.ctx = new AudioContext();
+  }
+
+  ngOnInit(): void {
+    this.inputList = [
+      {
+        component: MidiKeyboardComponent,
+        data: { context: this.ctx },
+      },
+      {
+        component: OscillatorComponent,
+        data: { context: this.ctx },
+      },
+    ];
+    this.filterRefs = [];
+    this.componentRefs = [];
 
   }
 
   /**
-   * Initializes the component
-   * @param id the node id
-   * @param options further initialization options
+   * - Connects the component references with one another
+   * - finishes the connection at ctx.destination
    */
-  init(id: string, options?: any): void | AudioNode {
-    this.id = id;
-    this.keyboard = new Keyboard(1 , 'sine');
-    this.ctx = new (AudioContext || BaseAudioContext)();
-    if (options) {
-      if (options.volume) {
-        this.keyboard.volume = options.volume;
+  connectNodes(): void {
+    // this.inputRef.instance.connectOutputTo(
+    //   // FIXME: must check for zero-length array
+    //   this.filterRefs[0].instance
+    // );
+
+    // for (let index = 0; index < this.filterRefs.length - 1; index++) {
+    //   this.filterRefs[index].instance.connectOutputTo(
+    //     this.filterRefs[index + 1].instance
+    //   );
+    // }
+
+    // // check if there are no filters, so that the synthesizer is always
+    // // connected to a destination
+    // if (this.filterRefs.length === 0) {
+    //   this.inputRef.instance.node.outputNode.connect(this.ctx.destination);
+    // } else {
+
+    //   this.filterRefs[this.filterRefs.length - 1].instance.node.outputNode.connect(
+    //     this.ctx.destination
+    //   );
+    // }
+
+    this.componentRefs = [];
+    this.componentRefs = this.componentRefs.concat(this.inputRef);
+    this.componentRefs = this.componentRefs.concat(this.filterRefs);
+
+    if (this.componentRefs.length > 0) {
+
+      let index: number = 0;
+      for (index; index < this.componentRefs.length - 1; index++) {
+        this.componentRefs[index].instance.connectOutputTo(this.componentRefs[index + 1].instance);
       }
-    }
-    this.kbdNode = new KeyboardNode(this.ctx);
-    this.adsrNode = new ADSRNode(this.ctx);
-    this.adsrOptions = {
-      attack: {
-        duration: 0.2,
-        startingValue: 0.5
-      },
-      decay: {
-        duration: 0.25,
-        startingValue: 1
-      },
-      sustain: {
-        duration: 0.5,
-        startingValue: 0.1
-      },
-      release: {
-        duration: 0.2,
-        startingValue: 0.1
-      }
-    };
-    this.kbdNode.connectOutputTo(this.adsrNode.inputNode);
-    this.adsrNode.outputNode.connect(this.ctx.destination);
-  }
-
-  ngOnInit(): void {
-    this.init(Math.random().toString());
-
-  }
-
-  onKeyPressed(e: Event, key: [string, number]): void {
-
-    // tslint:disable-next-line: no-bitwise
-    if ((e as MouseEvent).buttons & 1 ) {
-      this.adsrNode.attack_decay_env(this.adsrOptions);
-      this.kbdNode.playNote(key[0]);
+      
+      this.componentRefs[index].instance.node.outputNode.connect(this.ctx.destination);
     }
   }
 
-  onKeyReleased(): void {
-    this.adsrNode.release_env(this.adsrOptions);
-    setTimeout(() => {
-      this.kbdNode.stopPlaying();
-      this.adsrNode.reset();
-    }, this.adsrOptions.release.duration * 1000);
+  onInputRefsUpdated(inputRefs: any): void {
+    this.inputRef = inputRefs[0];
+    this.connectNodes();
   }
 
-  onVolumeChange(value: number): void {
-    this.kbdNode.changeVolume(value);
-  }
-
-  onWaveformChange(event: any): void {
-    this.kbdNode.changeWaveform(event.value);
+  onFilterRefsUpdated(filterRefs: any): void {
+    this.filterRefs = filterRefs;
+    this.connectNodes();
   }
 }

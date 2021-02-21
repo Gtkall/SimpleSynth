@@ -9,7 +9,8 @@ export class Keyboard {
     waveform: OscillatorType = 'sine';
 
     constructor(volume?: number, waveform?: OscillatorType) {
-        this.keys = new Map();
+        this.keys = new Map<string, number>();
+        this.keys = this.init();
         this.volume = volume;
         this.waveform = waveform;
         this.init();
@@ -19,10 +20,11 @@ export class Keyboard {
         const keys = Object.entries(notes);
 
         // initialize keyboard keys
+        const keyboard = new Map<string, number>();
         keys.forEach(key => {
-            this.keys.set(key[0], key[1]);
+            keyboard.set(key[0], key[1]);
         });
-        return this.keys;
+        return keyboard;
     }
 
 

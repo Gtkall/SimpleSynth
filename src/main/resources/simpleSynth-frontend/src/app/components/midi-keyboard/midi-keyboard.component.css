@@ -1,0 +1,12 @@
+.keyboard {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: space-around;
+
+}
+
+.key {
+    margin: 5px;
+    flex-grow: 2;
+}

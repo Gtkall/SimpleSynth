@@ -2,7 +2,7 @@ import { MultiAudioNode } from './multi-audio-node';
 import { Keyboard } from './keyboard.model';
 import { AudioNodeLike } from '../interfaces/audio-node-like.interface';
 
-export class KeyboardNode extends MultiAudioNode implements AudioNodeLike {
+export class CustomKeyboardNode extends MultiAudioNode {
 
 
     // tslint:disable: variable-name
@@ -44,7 +44,6 @@ export class KeyboardNode extends MultiAudioNode implements AudioNodeLike {
             this._oscList.get(key).start();
         });
     }
-
 
     playNote(note: string): void {
         if (this.currentlyPlaying !== note) {
