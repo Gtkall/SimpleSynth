@@ -20,6 +20,7 @@ export abstract class NodeLikeComponent implements AudioNodeLike {
      * @param next the node that will receive the input transmitted by this
      */
     connectOutputTo(next: NodeLikeComponent): void {
+        this.node.outputNode.disconnect();
         this.node.outputNode.connect(next.node.inputNode);
     }
 
@@ -29,6 +30,15 @@ export abstract class NodeLikeComponent implements AudioNodeLike {
      */
     connectInputTo(previous: NodeLikeComponent): void {
         previous.node.outputNode.connect(this.node.inputNode);
+    }
+
+    /**
+     * Disconnects the node by completely disconnecting both its inputNode
+     * and its outputNode
+     */
+    disconnect(): void {
+        this.node.inputNode.disconnect();
+        this.node.outputNode.disconnect();
     }
 
     /**

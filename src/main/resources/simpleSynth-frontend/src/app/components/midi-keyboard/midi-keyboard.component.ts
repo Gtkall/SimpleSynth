@@ -2,6 +2,7 @@ import {
   Component,
   Input,
   OnChanges,
+  OnDestroy,
   OnInit,
   SimpleChanges,
 } from '@angular/core';
@@ -20,7 +21,7 @@ import { makeid } from 'src/app/utils/random-alphanumeric';
 })
 export class MidiKeyboardComponent
   extends NodeLikeComponent
-  implements OnInit, OnChanges {
+  implements OnInit, OnChanges, OnDestroy {
   @Input() data = this.data;
 
   readonly id: string = makeid(6);
@@ -33,7 +34,6 @@ export class MidiKeyboardComponent
 
   ngOnChanges(changes: SimpleChanges): void {
     this.node = new CustomKeyboardNode(this.data.context);
-    console.log(changes);
 
   }
 
@@ -41,6 +41,10 @@ export class MidiKeyboardComponent
     // initialize a model kbd to display
     this.keyboard = new Keyboard(1, 'sine');
     this.node = new CustomKeyboardNode(this.data.context);
+  }
+
+  ngOnDestroy(): void {
+    (this.node as CustomKeyboardNode).outputNode.disconnect();
   }
 
   onKeyPressed(e: Event, key: [string, number]): void {
@@ -60,5 +64,9 @@ export class MidiKeyboardComponent
 
   onVolumeChanged(volume: number): void {
     (this.node as CustomKeyboardNode).changeVolume(volume);
+  }
+
+  onADSRChanged(toggle: any): void {
+    (this.node as CustomKeyboardNode).adsrOn = toggle.checked;
   }
 }

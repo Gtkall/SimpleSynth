@@ -1,15 +1,10 @@
-<div class="container">
-    
+<div class="lfo">
   <div class="item">
-    <button
-      style="cursor: default"
-      mat-raised-button
-      color="primary"
-      (click)="onPlayButtonPressed()"
-    >
-      <mat-icon *ngIf="!isPlaying">play_circle</mat-icon>
-      <mat-icon *ngIf="isPlaying">stop</mat-icon>
-    </button>
+    <h4>Enable / Disable</h4>
+    <mat-slide-toggle color="primary"
+      checked
+      (change)="onSliderToggled($event)"
+    ></mat-slide-toggle>
   </div>
 
   <div class="item">
@@ -23,18 +18,17 @@
   </div>
 
   <div class="item">
-    <h4>Detune = {{ detune.value }}</h4>
+    <h4>Frequency = {{ freq.value }} Hz.</h4>
     <mat-slider
-    #detune
-    color="primary"
-    min="-50"
-    max="50"
-    step="1"
-    value="0"
-    thumbLabel
-    (valueChange)="onDetuneChanged($event)"
+      #freq
+      color="primary"
+      min="1"
+      max="100"
+      step="1"
+      value="10"
+      thumbLabel
+      (valueChange)="onFrequencyChanged($event)"
     >
-  </mat-slider>
-</div>
-
+    </mat-slider>
+  </div>
 </div>

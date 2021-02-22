@@ -51,7 +51,6 @@ export class WorkspaceComponent implements OnInit {
     setTimeout(() => {
       this.updateComponentRefsFromWindowRefs(this.windows);
     }, 500);
-    console.log(this.windows);
     
 
   }
@@ -61,30 +60,7 @@ export class WorkspaceComponent implements OnInit {
    * positioned, based on the window reference array
    * @param windowRefs the window reference array
    */
-  updateComponentRefsFromWindowRefs(windowRefs: Array<ComponentRef<WindowComponent>>) {
-    // windowRefs.forEach((element) => {
-    //   componentRefs.push(element.instance.componentRef);
-    // });
-    // for (let index = 0; index < windowRefs.length; index++) {
-    //   componentRefs[index] = windowRefs[index].instance.componentRef;
-    // }
-    // let componentRefs: Array<ComponentRef<NodeLikeComponent>> = [...Array(windowRefs.length)];
-    // componentRefs = [...windowRefs.map((window) => window.instance.componentRef)];
-
-    // let componentRefs = Array.from(
-    //   {length: windowRefs.length}, (v = windowRefs, k) => windowRefs[k].instance.componentRef
-    // );
-
-    // let componentRefs: Array<ComponentRef<NodeLikeComponent>> = new Array<ComponentRef<NodeLikeComponent>>();
-    // componentRefs[0] = windowRefs[0].instance.componentRef;
-    // for (let index = 1; index < windowRefs.length; index++) {
-    //   componentRefs[index] = windowRefs[index].instance.componentRef;
-    // }
-
-    setTimeout(() => {
-      console.log(windowRefs.map(ref => ref.instance.componentRef));
-      
-    }, 1000);
+  updateComponentRefsFromWindowRefs(windowRefs: Array<ComponentRef<WindowComponent>>): void {
     this.componentRefsUpdated.emit(windowRefs.map(ref => ref.instance.componentRef));
   }
 

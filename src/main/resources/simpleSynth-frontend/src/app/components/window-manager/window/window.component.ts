@@ -32,11 +32,8 @@ export class WindowComponent implements OnInit, OnDestroy {
     if (this.componentItem) {
       // in case that window is instaciated from a template
       this.loadComponent(this.componentItem);
-    console.log('Component Ref has been initialized');
     }
-    console.log('called in onInit');
-    console.log(this.componentItem);
-    
+
   }
 
   ngOnDestroy(): void {
@@ -60,14 +57,11 @@ export class WindowComponent implements OnInit, OnDestroy {
     viewContainerRef.clear();
 
     const componentRef = viewContainerRef.createComponent<NodeLikeComponent>(componentFactory);
-    console.log(componentRef);
     
     this.componentRef = componentRef;
-    console.log(this.componentRef);
     
     componentItem.data.context.resume();
 
-    console.log(componentItem.data);
     this.componentRef.instance.data.context = componentItem.data.context;
     
   }

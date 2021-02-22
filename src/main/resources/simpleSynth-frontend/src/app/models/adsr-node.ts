@@ -5,10 +5,22 @@ import { MultiAudioNode as MultiAudioNode } from './multi-audio-node';
 export class ADSRNode extends MultiAudioNode implements AudioNodeLike {
 
     // tslint:disable: variable-name
-    private _attack: TimeEncapValue;
-    private _decay: TimeEncapValue;
-    private _sustain: TimeEncapValue;
-    private _release: TimeEncapValue;
+    private _attack: TimeEncapValue = {
+        duration: 0.5,
+        startingValue: 0.1
+    };
+    private _decay: TimeEncapValue = {
+        duration: 0.5,
+        startingValue: 0.1
+    };
+    private _sustain: TimeEncapValue = {
+        duration: 0.5,
+        startingValue: 0.1
+    };
+    private _release: TimeEncapValue = {
+        duration: 0.5,
+        startingValue: 0.1
+    };
 
     private gainNode: GainNode;
 

@@ -1,4 +1,4 @@
-import { Component, Input, OnChanges, OnInit, SimpleChanges } from '@angular/core';
+import { Component, Input, OnChanges, OnDestroy, OnInit, SimpleChanges } from '@angular/core';
 import { Keyboard } from 'src/app/models/keyboard.model';
 import { NodeLikeComponent } from 'src/app/models/node-like-component';
 import { CustomOscillatorNode } from 'src/app/models/oscillator-node';
@@ -12,7 +12,7 @@ import notes from '../../json/note-freq.json';
 })
 export class OscillatorComponent
   extends NodeLikeComponent
-  implements OnInit {
+  implements OnInit, OnDestroy {
 
   isPlaying = false;
 
@@ -27,8 +27,10 @@ export class OscillatorComponent
   
   ngOnInit(): void {
     this.node = new CustomOscillatorNode(this.data.context);
-    console.log(this.data.context);
-    
+  }
+
+  ngOnDestroy(): void {
+    (this.node as CustomOscillatorNode).outputNode.disconnect();
   }
 
   onPlayButtonPressed(): void {
@@ -42,5 +44,9 @@ export class OscillatorComponent
 
   onWaveformChanged(waveform: any): void {
     (this.node as CustomOscillatorNode).type = waveform.value;
+  }
+
+  onDetuneChanged(detune: number): void {
+    (this.node as CustomOscillatorNode).detune = detune;
   }
 }

@@ -7,14 +7,12 @@
     color="primary"
     (pointerdown)="onKeyPressed($event, key)"
     (pointerup)="onKeyReleased($event, key)"
-    (pointerleave)="onKeyReleased($event, key)"
   >
     {{ key[0] }}
   </button>
 </div>
 
 <div class="keyboard">
-
   <div class="item">
     <h4>Waveform Picker</h4>
     <mat-button-toggle-group (change)="onWaveformChanged($event)">
@@ -24,20 +22,27 @@
       <mat-button-toggle value="triangle">triangle</mat-button-toggle>
     </mat-button-toggle-group>
   </div>
-  
+
   <div class="item">
     <h4>Volume = {{ volume.value | percent }}</h4>
     <mat-slider
-    #volume
-    color="primary"
-    min="0"
-    max="1"
-    step="0.01"
-    value="1"
-    thumbLabel
-    (valueChange)="onVolumeChanged($event)"
+      #volume
+      color="primary"
+      min="0"
+      max="1"
+      step="0.01"
+      value="1"
+      thumbLabel
+      (valueChange)="onVolumeChanged($event)"
     >
-  </mat-slider>
-</div>
+    </mat-slider>
+  </div>
 
+  <div class="item">
+    <h4>Enable / Disable ADSR</h4>
+    <mat-slide-toggle color="primary"
+      checked="false"
+      (change)="onADSRChanged($event)"
+    ></mat-slide-toggle>
+  </div>
 </div>

@@ -1,4 +1,4 @@
-import { MultiAudioNode } from "./multi-audio-node";
+import { MultiAudioNode } from './multi-audio-node';
 
 export class CustomOscillatorNode extends MultiAudioNode {
 
@@ -7,6 +7,7 @@ export class CustomOscillatorNode extends MultiAudioNode {
     constructor(context: AudioContext | BaseAudioContext) {
         super(context.createAnalyser(), context.createAnalyser());
         this.osc = context.createOscillator();
+        this.inputNode.connect(this.outputNode);
         this.osc.start();
     }
 
@@ -24,5 +25,9 @@ export class CustomOscillatorNode extends MultiAudioNode {
 
     public set type(type: OscillatorType) {
         this.osc.type = type;
+    }
+
+    public set detune(detune: number) {
+        this.osc.detune.value = detune;
     }
 }
