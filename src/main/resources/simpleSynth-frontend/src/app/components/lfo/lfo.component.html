@@ -1,0 +1,34 @@
+<div class="lfo">
+  <div class="item">
+    <h4>Enable / Disable</h4>
+    <mat-slide-toggle color="primary"
+      checked
+      (change)="onSliderToggled($event)"
+    ></mat-slide-toggle>
+  </div>
+
+  <div class="item">
+    <h4>Waveform Picker</h4>
+    <mat-button-toggle-group (change)="onWaveformChanged($event)">
+      <mat-button-toggle checked value="sine">sine</mat-button-toggle>
+      <mat-button-toggle value="sawtooth">sawtooth</mat-button-toggle>
+      <mat-button-toggle value="square">square</mat-button-toggle>
+      <mat-button-toggle value="triangle">triangle</mat-button-toggle>
+    </mat-button-toggle-group>
+  </div>
+
+  <div class="item">
+    <h4>Frequency = {{ freq.value }} Hz.</h4>
+    <mat-slider
+      #freq
+      color="primary"
+      min="1"
+      max="100"
+      step="1"
+      value="10"
+      thumbLabel
+      (valueChange)="onFrequencyChanged($event)"
+    >
+    </mat-slider>
+  </div>
+</div>

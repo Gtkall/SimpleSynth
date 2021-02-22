@@ -9,12 +9,8 @@ import { ComponentItem } from './models/component-item';
   styleUrls: ['./app.component.css']
 })
 export class AppComponent implements OnInit {
-  title = 'simpleSynth-frontend';
-  cmp: Array<ComponentItem>;
-  
+
   ngOnInit(): void {
-    this.cmp = new Array();
-    this.cmp.push({component: ExampleComponent});
-    this.cmp.push({component: Example2Component});
+
   }
 }

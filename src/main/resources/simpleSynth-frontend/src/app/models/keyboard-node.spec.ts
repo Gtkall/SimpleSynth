@@ -1,7 +1,7 @@
-import { KeyboardNode } from './keyboard-node';
+import { CustomKeyboardNode } from './keyboard-node';
 
 describe('KeyboardNode', () => {
   it('should create an instance', () => {
-    expect(new KeyboardNode()).toBeTruthy();
+    expect(new CustomKeyboardNode()).toBeTruthy();
   });
 });

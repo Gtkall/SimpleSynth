@@ -1,4 +1,4 @@
-<div class="container">
+<!-- <div class="container">
   <div class="keyboard">
     <div *ngIf="oscSlider.checked; then keyList else oscList"></div>
 
@@ -78,4 +78,20 @@
         </div>
   </div>
 
-</div>
+</div> -->
+
+<app-workspace class="item"
+  [componentsList]="inputList" 
+  [maxWindowCount]="1"
+  (componentRefsUpdated)="onInputRefsUpdated($event)"
+>
+</app-workspace>
+
+<hr>
+
+<app-workspace 
+  [componentsList]="filterList" 
+  [maxWindowCount]="-1"
+  (componentRefsUpdated)="onFilterRefsUpdated($event)"
+>
+</app-workspace>

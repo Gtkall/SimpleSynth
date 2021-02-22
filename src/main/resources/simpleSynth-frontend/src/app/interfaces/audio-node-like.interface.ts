@@ -1,7 +1,9 @@
+import { NodeLikeComponent } from '../models/node-like-component';
+
 export interface AudioNodeLike {
 
-    connectOutputTo(outputNode: AudioNode): void;
+    connectOutputTo(outputNode: NodeLikeComponent): void;
 
-    connectInputTo(inputNode: AudioNode): void;
+    connectInputTo(inputNode: NodeLikeComponent): void;
 
 }

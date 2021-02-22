@@ -4,6 +4,7 @@ import { AnchorDirective } from 'src/app/directives/anchor.directive';
 import { DataBindable } from 'src/app/interfaces/data-bindable.interface';
 import { StateChangeByID, StatefulEvent, WindowState } from 'src/app/interfaces/stateful.interface';
 import { ComponentItem } from 'src/app/models/component-item';
+import { NodeLikeComponent } from 'src/app/models/node-like-component';
 import { StatefulService } from 'src/app/services/stateful.service';
 import { makeid } from 'src/app/utils/random-alphanumeric';
 
@@ -12,14 +13,14 @@ import { makeid } from 'src/app/utils/random-alphanumeric';
   templateUrl: './window.component.html',
   styleUrls: ['./window.component.css']
 })
-export class WindowComponent implements OnInit, OnDestroy, OnChanges {
+export class WindowComponent implements OnInit, OnDestroy {
 
-  @Input() componentItem: ComponentItem;
+  componentItem: ComponentItem = {component: WindowComponent};
   // enforce only stateful custom events to be passed above (mock stateful presence)
   @Output() windowStateChanged: EventEmitter<StateChangeByID> = new EventEmitter();
   @ViewChild(AnchorDirective, {static: true}) appAnchorhost: AnchorDirective;
 
-  componentRef: ComponentRef<any>;
+  componentRef: ComponentRef<NodeLikeComponent>;
   windowState: WindowState = 'windowed';
   public readonly id: string = makeid(6);
 
@@ -30,39 +31,39 @@ export class WindowComponent implements OnInit, OnDestroy, OnChanges {
   ngOnInit(): void {
     if (this.componentItem) {
       // in case that window is instaciated from a template
-      this.componentRef = this.loadComponent<DataBindable>(this.componentItem);
+      this.loadComponent(this.componentItem);
     }
+
   }
 
   ngOnDestroy(): void {
 
   }
 
-  /**
-   * Adds change detection whenever input is updated
-   * @param changes the array containing all the changes that happened to the inputs
-   * during this change detection cycle
-   */
-  ngOnChanges(changes: SimpleChanges): void {
-    this.componentRef = this.loadComponent(this.componentItem);
-  }
-
+  
   /**
    * Loads the component by instanciating a view inside the viewContainerRef of the
    * window component. Returns a reference to the component created.
    * @param componentItem the data class object out of which the factory will be created
    */
-  loadComponent<T>(componentItem: ComponentItem): ComponentRef<T> {
+  loadComponent(componentItem: ComponentItem) {
 
     const componentFactory =
-    this.componentFactoryResolver.resolveComponentFactory(componentItem.component);
+    this.componentFactoryResolver.resolveComponentFactory<NodeLikeComponent>(componentItem.component);
+
+    componentFactory.inputs.push({propName: 'data', templateName: 'balsd'});
 
     const viewContainerRef = this.appAnchorhost.viewContainerRef;
     viewContainerRef.clear();
 
-    const componentRef = viewContainerRef.createComponent<T>(componentFactory);
+    const componentRef = viewContainerRef.createComponent<NodeLikeComponent>(componentFactory);
+    
     this.componentRef = componentRef;
-    return componentRef;
+    
+    componentItem.data.context.resume();
+
+    this.componentRef.instance.data.context = componentItem.data.context;
+    
   }
 
   /**
