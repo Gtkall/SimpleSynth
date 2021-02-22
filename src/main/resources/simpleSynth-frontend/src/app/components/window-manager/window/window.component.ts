@@ -64,7 +64,7 @@ export class WindowComponent implements OnInit, OnDestroy {
    * window component. Returns a reference to the component created.
    * @param componentItem the data class object out of which the factory will be created
    */
-  loadComponent(componentItem: ComponentItem) {
+  loadComponent(componentItem: ComponentItem): void {
     const componentFactory = this.componentFactoryResolver.resolveComponentFactory<NodeLikeComponent>(
       componentItem.component
     );

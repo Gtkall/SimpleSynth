@@ -32,10 +32,12 @@ export class SynthesizerComponent implements OnInit {
       {
         component: MidiKeyboardComponent,
         data: { context: this.ctx },
+        name: 'Midi Keyboard'
       },
       {
         component: OscillatorComponent,
         data: { context: this.ctx },
+        name: 'Oscillator'
       },
     ];
 
@@ -43,18 +45,22 @@ export class SynthesizerComponent implements OnInit {
       {
         component: LFOComponent,
         data: { context: this.ctx },
+        name: 'LFO'
       },
       {
         component: OscillatorComponent,
         data: { context: this.ctx },
+        name: 'Oscillator'
       },
       {
         component: VCAComponent,
         data: { context: this.ctx },
+        name: 'VCA'
       },
       {
         component: VCFComponent,
         data: { context: this.ctx },
+        name: 'VCF'
       },
     ];
 
