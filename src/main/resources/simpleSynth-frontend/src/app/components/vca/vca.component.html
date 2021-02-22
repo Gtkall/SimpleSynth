@@ -1,0 +1,16 @@
+<div class="container">
+  <div class="item">
+    <h4>Volume = {{ volume.value | percent }}</h4>
+    <mat-slider
+      #volume
+      color="primary"
+      min="0"
+      max="1"
+      step="0.01"
+      value="1"
+      thumbLabel
+      (valueChange)="onVolumeChanged($event)"
+    >
+    </mat-slider>
+  </div>
+</div>

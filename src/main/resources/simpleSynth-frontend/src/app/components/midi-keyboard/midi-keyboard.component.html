@@ -1,6 +1,6 @@
-<div class="keyboard">
+<div class="container">
   <button
-    class="key"
+    class="item"
     *ngFor="let key of keyboard.keys.entries()"
     style="cursor: default"
     mat-raised-button
@@ -12,7 +12,7 @@
   </button>
 </div>
 
-<div class="keyboard">
+<div class="container">
   <div class="item">
     <h4>Waveform Picker</h4>
     <mat-button-toggle-group (change)="onWaveformChanged($event)">
@@ -37,12 +37,105 @@
     >
     </mat-slider>
   </div>
+</div>
 
+<div class="container">
   <div class="item">
     <h4>Enable / Disable ADSR</h4>
-    <mat-slide-toggle color="primary"
+    <mat-slide-toggle
+      color="primary"
+      #ADSR
       checked="false"
       (change)="onADSRChanged($event)"
     ></mat-slide-toggle>
+  </div>
+
+  <div class="item">
+    <div class="container">
+      <div class="item">
+        <h4>Attack Duration = {{ attackDuration.value }} sec.</h4>
+        <mat-slider
+          #attackDuration
+          [disabled]="!ADSR.checked"
+          (valueChange)="onAttackDurationChanged($event)"
+          color="primary"
+          min="0"
+          max="1"
+          step="0.01"
+          value="0.5"
+          thumbLabel
+        ></mat-slider>
+      </div>
+      <div class="item">
+        <h4>Attack Starting Value = {{ attackStart.value | percent }}</h4>
+        <mat-slider
+          #attackStart
+          [disabled]="!ADSR.checked"
+          (valueChange)="onAttackStartChanged($event)"
+          color="primary"
+          min="0"
+          max="1"
+          step="0.01"
+          value="0.1"
+          thumbLabel
+        ></mat-slider>
+      </div>
+      <div class="item">
+        <h4>Decay Duration = {{ decayDuration.value }} sec.</h4>
+        <mat-slider
+          #decayDuration
+          [disabled]="!ADSR.checked"
+          (valueChange)="onDecayDurationChanged($event)"
+          color="primary"
+          min="0"
+          max="1"
+          step="0.01"
+          value="0.5"
+          thumbLabel
+        ></mat-slider>
+      </div>
+      <div class="item">
+        <h4>Decay Starting Value = {{ decayStart.value | percent }}</h4>
+        <mat-slider
+          #decayStart
+          [disabled]="!ADSR.checked"
+          (valueChange)="onDecayStartChanged($event)"
+          color="primary"
+          min="0"
+          max="1"
+          step="0.01"
+          value="1"
+          thumbLabel
+        ></mat-slider>
+      </div>
+      <div class="item">
+        <h4>Sustain Starting Value = {{ sustainStart.value | percent }}</h4>
+        <mat-slider
+          #sustainStart
+          [disabled]="!ADSR.checked"
+          (valueChange)="onSustainStartChanged($event)"
+          color="primary"
+          min="0"
+          max="1"
+          step="0.01"
+          value="0.4"
+          thumbLabel
+        ></mat-slider>
+      </div>
+      <div class="item">
+        <h4>Release Duration = {{ releaseDuration.value }} sec.</h4>
+        <mat-slider
+          #releaseDuration
+          [disabled]="!ADSR.checked"
+          (valueChange)="onReleaseDurationChanged($event)"
+          color="primary"
+          min="0"
+          max="1"
+          value="0.5"
+          step="0.01"
+          thumbLabel
+        ></mat-slider>
+      </div>
+    </div>
   </div>
 </div>

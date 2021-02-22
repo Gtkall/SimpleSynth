@@ -1,26 +1,43 @@
 .osc-slider {
-    float: left;
-    width: 25%;
+  float: left;
+  width: 25%;
 }
 
 .volume-slider {
-    float: left;
-    width: 25%;
+  float: left;
+  width: 25%;
 }
 
 .waveform-picker {
-    float: left;
-    width: 50%;
+  float: left;
+  width: 50%;
 }
 
 .adsr-slider {
-    float: left;
-    width: 33%;
+  float: left;
+  width: 33%;
 }
 
-hr {
-    border: 0;
-    height: 0;
-    border-top: 1px solid rgba(0, 0, 0, 0.1);
-    border-bottom: 1px solid rgba(255, 255, 255, 0.3);
+.separator {
+  display: flex;
+  align-items: center;
+  text-align: center;
+}
+
+.separator::before,
+.separator::after {
+  content: "";
+  flex: 1;
+  border: 2px solid #c2185b;
+  border-radius: 15px;
+}
+
+.separator:not(:empty)::before {
+  margin-right: 1em;
+  margin-left: 1em;
+}
+
+.separator:not(:empty)::after {
+  margin-left: 1em;
+  margin-right: 1em;
 }

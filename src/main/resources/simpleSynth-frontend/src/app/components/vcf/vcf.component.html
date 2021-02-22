@@ -1,0 +1,40 @@
+<div class="container">
+  <div class="item">
+    <h4>Filter Type Picker</h4>
+    <mat-button-toggle-group (change)="onTypeChanged($event)">
+      <mat-button-toggle checked value="lowpass">Low-Pass</mat-button-toggle>
+      <mat-button-toggle value="highpass">High-Pass</mat-button-toggle>
+      <mat-button-toggle value="bandpass">Band-Pass</mat-button-toggle>
+    </mat-button-toggle-group>
+  </div>
+
+  <div class="item">
+    <h4>Frequency Cut-Off = {{ freq.value }}</h4>
+    <mat-slider
+      #freq
+      color="primary"
+      min="0"
+      max="10000"
+      step="1"
+      value="5000"
+      thumbLabel
+      (valueChange)="onFrequencyChanged($event)"
+    >
+    </mat-slider>
+  </div>
+
+  <div class="item">
+    <h4>= {{ q.value }}</h4>
+    <mat-slider
+      #q
+      color="primary"
+      min="0"
+      max="100"
+      step="0.5"
+      value="50"
+      thumbLabel
+      (valueChange)="onQChanged($event)"
+    >
+    </mat-slider>
+  </div>
+</div>

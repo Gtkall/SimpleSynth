@@ -1,9 +1,15 @@
-import { Component, Input, OnChanges, OnDestroy, OnInit, SimpleChanges } from '@angular/core';
+import {
+  Component,
+  Input,
+  OnChanges,
+  OnDestroy,
+  OnInit,
+  SimpleChanges,
+} from '@angular/core';
 import { Keyboard } from 'src/app/models/keyboard.model';
 import { NodeLikeComponent } from 'src/app/models/node-like-component';
 import { CustomOscillatorNode } from 'src/app/models/oscillator-node';
 import notes from '../../json/note-freq.json';
-
 
 @Component({
   selector: 'app-oscillator',
@@ -13,18 +19,17 @@ import notes from '../../json/note-freq.json';
 export class OscillatorComponent
   extends NodeLikeComponent
   implements OnInit, OnDestroy {
-
   isPlaying = false;
 
   constructor() {
     super(new CustomOscillatorNode(new AudioContext()));
   }
-  
+
   // ngOnChanges(changes: SimpleChanges): void {
   //   this.node = new CustomOscillatorNode(this.data.context);
   //   (this.node as CustomOscillatorNode).frequency = 440;
   // }
-  
+
   ngOnInit(): void {
     this.node = new CustomOscillatorNode(this.data.context);
   }

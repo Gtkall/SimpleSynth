@@ -1,5 +1,13 @@
-import { Component, ComponentFactoryResolver, ComponentRef,
-  EventEmitter, Input, OnInit, Output, ViewChild } from '@angular/core';
+import {
+  Component,
+  ComponentFactoryResolver,
+  ComponentRef,
+  EventEmitter,
+  Input,
+  OnInit,
+  Output,
+  ViewChild,
+} from '@angular/core';
 import { AnchorDirective } from 'src/app/directives/anchor.directive';
 import { StateChangeByID } from 'src/app/interfaces/stateful.interface';
 import { ComponentItem } from 'src/app/models/component-item';
@@ -11,29 +19,29 @@ import { WindowComponent } from '../window/window.component';
   selector: 'app-workspace',
   templateUrl: './workspace.component.html',
   styleUrls: ['./workspace.component.css'],
-  providers: [StatefulService]
+  providers: [StatefulService],
 })
 export class WorkspaceComponent implements OnInit {
-
   @Input() componentsList: Array<ComponentItem>;
   @Input() maxWindowCount = -1;
-  @ViewChild(AnchorDirective, {static: true}) appAnchorHost: AnchorDirective;
-  @Output() componentRefsUpdated: EventEmitter<Array<ComponentRef<NodeLikeComponent>>>
-  = new EventEmitter();
+  @ViewChild(AnchorDirective, { static: true }) appAnchorHost: AnchorDirective;
+  @Output() componentRefsUpdated: EventEmitter<
+    Array<ComponentRef<NodeLikeComponent>>
+  > = new EventEmitter();
 
   windows: Array<ComponentRef<WindowComponent>>;
 
-  constructor(private componentFactoryResolver: ComponentFactoryResolver,
-              private statefulService: StatefulService ) {
-    this.statefulService.statefulEvent$.subscribe(
-      payload => this.onWindowStateChanged(payload)
+  constructor(
+    private componentFactoryResolver: ComponentFactoryResolver,
+    private statefulService: StatefulService
+  ) {
+    this.statefulService.statefulEvent$.subscribe((payload) =>
+      this.onWindowStateChanged(payload)
     );
     this.windows = [...Array<ComponentRef<WindowComponent>>(0)];
   }
 
-  ngOnInit(): void {
-
-  }
+  ngOnInit(): void {}
 
   /**
    * - Dynamically creates a new window view, which houses the
@@ -43,16 +51,13 @@ export class WorkspaceComponent implements OnInit {
    * @param component the kind of component selected
    */
   onModuleSelected(component: ComponentItem): void {
-
     const windowRef = this.loadWindow();
     windowRef.instance.componentItem = component;
     this.windows.push(windowRef);
-    
+
     setTimeout(() => {
       this.updateComponentRefsFromWindowRefs(this.windows);
     }, 500);
-    
-
   }
 
   /**
@@ -60,21 +65,27 @@ export class WorkspaceComponent implements OnInit {
    * positioned, based on the window reference array
    * @param windowRefs the window reference array
    */
-  updateComponentRefsFromWindowRefs(windowRefs: Array<ComponentRef<WindowComponent>>): void {
-    this.componentRefsUpdated.emit(windowRefs.map(ref => ref.instance.componentRef));
+  updateComponentRefsFromWindowRefs(
+    windowRefs: Array<ComponentRef<WindowComponent>>
+  ): void {
+    this.componentRefsUpdated.emit(
+      windowRefs.map((ref) => ref.instance.componentRef)
+    );
   }
 
   /**
    * Returns a new window instance reference
    */
   loadWindow(): ComponentRef<WindowComponent> {
-    const windowFactory =
-    this.componentFactoryResolver.resolveComponentFactory(WindowComponent);
+    const windowFactory = this.componentFactoryResolver.resolveComponentFactory(
+      WindowComponent
+    );
 
     const viewContainerRef = this.appAnchorHost.viewContainerRef;
 
-    const windowComponentRef =
-    viewContainerRef.createComponent<WindowComponent>(windowFactory);
+    const windowComponentRef = viewContainerRef.createComponent<WindowComponent>(
+      windowFactory
+    );
 
     return windowComponentRef;
   }
@@ -84,7 +95,6 @@ export class WorkspaceComponent implements OnInit {
    * @param payload the state-specific payload emited by the window
    */
   onWindowStateChanged(payload: StateChangeByID): void {
-
     switch (payload.stateChange) {
       case 'close':
         this.closeWindow(payload.id);
@@ -98,7 +108,6 @@ export class WorkspaceComponent implements OnInit {
       default:
         break;
     }
-
   }
 
   /**
@@ -125,36 +134,41 @@ export class WorkspaceComponent implements OnInit {
   }
 
   moveWindow(id: string, direction: string): void {
-
     const windowIndex = this.windows.findIndex((window) => {
       return window.instance.id === id;
     });
     const temp = this.windows[windowIndex];
-    const windowViewIndex = this.appAnchorHost.viewContainerRef.indexOf(temp.hostView);
+    const windowViewIndex = this.appAnchorHost.viewContainerRef.indexOf(
+      temp.hostView
+    );
 
     switch (direction) {
       case 'move_left':
         // out of bounds guard
         if (windowIndex !== 0) {
-
           // update the window reference array
           this.windows[windowIndex] = this.windows[windowIndex - 1];
           this.windows[windowIndex - 1] = temp;
 
           // update the view container reference array
-          this.appAnchorHost.viewContainerRef.move(temp.hostView, windowViewIndex - 1);
+          this.appAnchorHost.viewContainerRef.move(
+            temp.hostView,
+            windowViewIndex - 1
+          );
         }
         break;
       case 'move_right':
         // out of bounds guard
         if (windowIndex !== this.windows.length - 1) {
-
           // update the window reference array
           this.windows[windowIndex] = this.windows[windowIndex + 1];
           this.windows[windowIndex + 1] = temp;
 
           // update the view container reference array
-          this.appAnchorHost.viewContainerRef.move(temp.hostView, windowViewIndex + 1);
+          this.appAnchorHost.viewContainerRef.move(
+            temp.hostView,
+            windowViewIndex + 1
+          );
         }
         break;
       default:
@@ -164,5 +178,4 @@ export class WorkspaceComponent implements OnInit {
     // emit updated window array
     this.updateComponentRefsFromWindowRefs(this.windows);
   }
-
 }

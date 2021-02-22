@@ -1,11 +1,11 @@
 import { MultiAudioNode } from './multi-audio-node';
 import { Keyboard } from './keyboard.model';
-import { AudioNodeLike } from '../interfaces/audio-node-like.interface';
 import { TimeEncapValue } from '../interfaces/adsr-options.interface';
 
 export class CustomKeyboardNode extends MultiAudioNode {
   // tslint:disable: variable-name
   private _oscList: Map<string, OscillatorNode>;
+  private _adsrNode: GainNode;
   private _gainNode: GainNode;
   private _currentlyPlaying: string;
   private _adsrOn: boolean;
@@ -29,13 +29,15 @@ export class CustomKeyboardNode extends MultiAudioNode {
   };
 
   constructor(context: AudioContext | BaseAudioContext, options?: any) {
-    super();
+    super(context.createAnalyser(), context.createAnalyser());
     this._oscList = new Map();
     this.outputNode = new AnalyserNode(context);
     this._gainNode = new GainNode(context);
+    this._adsrNode = new GainNode(context);
     this._currentlyPlaying = '';
     this._adsrOn = false;
 
+    this._adsrNode.connect(this._gainNode);
     this._gainNode.connect(this.outputNode);
 
     // if keys are provided
@@ -65,29 +67,28 @@ export class CustomKeyboardNode extends MultiAudioNode {
   }
 
   playNote(note: string): void {
-    this._gainNode.gain.value = 1;
+    this._adsrNode.gain.value = 1;
     if (this.currentlyPlaying !== note) {
-      this._oscList.get(note).connect(this._gainNode);
+      this._oscList.get(note).connect(this._adsrNode);
       this._currentlyPlaying = note;
     }
-    if (this.adsrOn){
-        this.runAttackDelay();
+    if (this.adsrOn) {
+      this.runAttackDelay();
     }
-
   }
 
   stopPlaying(): void {
-    if (this.adsrOn){
-        this.runSustainRelease();
-        setTimeout(() => {
-            this._oscList.get(this.currentlyPlaying).disconnect();
-            this._currentlyPlaying = '';
-            this._gainNode.gain.value = 1;
-        }, this.release.duration * 1000 + 1);
-    } else {
+    if (this.adsrOn) {
+      this.runSustainRelease();
+      setTimeout(() => {
         this._oscList.get(this.currentlyPlaying).disconnect();
         this._currentlyPlaying = '';
-        this._gainNode.gain.value = 1;
+        this._adsrNode.gain.value = 1;
+      }, this.release.duration * 1000 + 1);
+    } else {
+      this._oscList.get(this.currentlyPlaying).disconnect();
+      this._currentlyPlaying = '';
+      this._adsrNode.gain.value = 1;
     }
   }
 
@@ -124,25 +125,31 @@ export class CustomKeyboardNode extends MultiAudioNode {
 
   runAttackDelay(): void {
     // cancel any remaining scheduled events
-    const now = this._gainNode.context.currentTime;
-    this._gainNode.gain.cancelScheduledValues(now);
+    const now = this._adsrNode.context.currentTime;
+    this._adsrNode.gain.cancelScheduledValues(now);
     // prepare the gain node for ramp up
-    this._gainNode.gain.setValueAtTime(this._attack.startingValue, now);
+    this._adsrNode.gain.setValueAtTime(this._attack.startingValue, now);
     // set attack
     const attackDuration = now + this._attack.duration;
-    this._gainNode.gain.linearRampToValueAtTime(this._decay.startingValue, attackDuration);
+    this._adsrNode.gain.linearRampToValueAtTime(
+      this._decay.startingValue,
+      attackDuration
+    );
     // set decay
     const decayDuration = attackDuration + this._decay.duration;
-    this._gainNode.gain.linearRampToValueAtTime(this._sustain.startingValue, decayDuration);
+    this._adsrNode.gain.linearRampToValueAtTime(
+      this._sustain.startingValue,
+      decayDuration
+    );
   }
 
   runSustainRelease(): void {
-      // cancel any remaining scheduled events
-      const now = this._gainNode.context.currentTime;
-      this._gainNode.gain.cancelScheduledValues(now);
-      // set release
-      const releaseDuration = now + this._release.duration;
-      this._gainNode.gain.linearRampToValueAtTime(0, releaseDuration);
+    // cancel any remaining scheduled events
+    const now = this._adsrNode.context.currentTime;
+    this._adsrNode.gain.cancelScheduledValues(now);
+    // set release
+    const releaseDuration = now + this._release.duration;
+    this._adsrNode.gain.linearRampToValueAtTime(0, releaseDuration);
   }
 
   /** GETTERS / SETTERS */

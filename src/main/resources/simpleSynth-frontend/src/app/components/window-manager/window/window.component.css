@@ -1,9 +1,9 @@
 .frame {
-    display: flex;
-    flex-direction: row;
+  display: flex;
+  flex-direction: row;
 }
 
-.item {    
-    margin: 5px;
-    flex-grow: 2;
+.item {
+  max-width: fit-content;
+  margin: 5px;
 }

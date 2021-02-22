@@ -5,6 +5,8 @@ import { makeid } from 'src/app/utils/random-alphanumeric';
 import { LFOComponent } from '../lfo/lfo.component';
 import { MidiKeyboardComponent } from '../midi-keyboard/midi-keyboard.component';
 import { OscillatorComponent } from '../oscillator/oscillator.component';
+import { VCAComponent } from '../vca/vca.component';
+import { VCFComponent } from '../vcf/vcf.component';
 
 @Component({
   selector: 'app-synthesizer',
@@ -40,17 +42,24 @@ export class SynthesizerComponent implements OnInit {
     this.filterList = [
       {
         component: LFOComponent,
-        data: {context: this.ctx}
+        data: { context: this.ctx },
       },
       {
         component: OscillatorComponent,
+        data: { context: this.ctx },
+      },
+      {
+        component: VCAComponent,
+        data: { context: this.ctx },
+      },
+      {
+        component: VCFComponent,
         data: { context: this.ctx },
       },
     ];
 
     this.filterRefs = [];
     this.componentRefs = [];
-
   }
 
   /**
@@ -58,7 +67,6 @@ export class SynthesizerComponent implements OnInit {
    * - finishes the connection at ctx.destination
    */
   connectNodes(): void {
-
     this.componentRefs = [...Array(0)];
     this.componentRefs = this.componentRefs.concat(this.inputRef);
     this.componentRefs = this.componentRefs.concat(this.filterRefs);
@@ -66,11 +74,15 @@ export class SynthesizerComponent implements OnInit {
     if (this.componentRefs.length > 0) {
       let index = 0;
       for (index; index < this.componentRefs.length - 1; index++) {
-        this.componentRefs[index].instance.connectOutputTo(this.componentRefs[index + 1].instance);
+        this.componentRefs[index].instance.connectOutputTo(
+          this.componentRefs[index + 1].instance
+        );
       }
 
       this.componentRefs[index].instance.node.outputNode.disconnect();
-      this.componentRefs[index].instance.node.outputNode.connect(this.ctx.destination);
+      this.componentRefs[index].instance.node.outputNode.connect(
+        this.ctx.destination
+      );
     }
   }
 

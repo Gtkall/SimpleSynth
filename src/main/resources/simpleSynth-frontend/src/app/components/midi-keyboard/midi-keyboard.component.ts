@@ -27,14 +27,12 @@ export class MidiKeyboardComponent
   readonly id: string = makeid(6);
   keyboard: Keyboard;
 
-
   constructor() {
     super(new CustomKeyboardNode(new AudioContext()));
   }
 
   ngOnChanges(changes: SimpleChanges): void {
     this.node = new CustomKeyboardNode(this.data.context);
-
   }
 
   ngOnInit(): void {
@@ -49,7 +47,7 @@ export class MidiKeyboardComponent
 
   onKeyPressed(e: Event, key: [string, number]): void {
     // tslint:disable-next-line: no-bitwise
-    if ((e as MouseEvent).buttons & 1 ) {
+    if ((e as MouseEvent).buttons & 1) {
       (this.node as CustomKeyboardNode).playNote(key[0]);
     }
   }
@@ -68,5 +66,29 @@ export class MidiKeyboardComponent
 
   onADSRChanged(toggle: any): void {
     (this.node as CustomKeyboardNode).adsrOn = toggle.checked;
+  }
+
+  onAttackDurationChanged(duration: number): void {
+    (this.node as CustomKeyboardNode).attack.duration = duration;
+  }
+
+  onAttackStartChanged(start: number): void {
+    (this.node as CustomKeyboardNode).attack.startingValue = start;
+  }
+
+  onDecayDurationChanged(duration: number): void {
+    (this.node as CustomKeyboardNode).decay.duration = duration;
+  }
+
+  onDecayStartChanged(start: number): void {
+    (this.node as CustomKeyboardNode).decay.startingValue = start;
+  }
+
+  onSustainStartChanged(start: number): void {
+    (this.node as CustomKeyboardNode).sustain.startingValue = start;
+  }
+
+  onReleaseDurationChanged(duration: number): void {
+    (this.node as CustomKeyboardNode).release.duration = duration;
   }
 }

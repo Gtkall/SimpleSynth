@@ -1,96 +1,17 @@
-<!-- <div class="container">
-  <div class="keyboard">
-    <div *ngIf="oscSlider.checked; then keyList else oscList"></div>
+<div class="separator"><h2 style="color: #c2185b">Input Section</h2></div>
 
-    <ng-template #keyList>
-      <mat-grid-list [cols]="keyboard.keys.size" rowHeight="100px">
-        <mat-grid-tile *ngFor="let key of keyboard.keys.entries()">
-          <button style="cursor: default;" mat-raised-button color="primary" (pointerdown)="onKeyPressed($event, key)"
-            (pointerup)="onKeyReleased($event, key)" (pointerleave)="onKeyReleased($event, key)">
-            {{key[0]}}
-          </button>
-        </mat-grid-tile>
-      </mat-grid-list>
-    </ng-template>
-
-
-    <ng-template #oscList>
-      <mat-button-toggle-group>
-        <mat-button-toggle *ngFor="let key of keyboard.keys.entries()">
-          {{key[0]}}
-        </mat-button-toggle>
-      </mat-button-toggle-group>
-    </ng-template>
-
-    <div class="osc-slider">
-      <mat-slide-toggle #oscSlider checked color="primary">Toggle Keys Oscillator</mat-slide-toggle>
-    </div>
-
-    <div class="volume-slider">
-      <h4>Volume = {{volume.value | percent}}</h4>
-      <mat-slider #volume color="primary" min="0" max="1" step="0.01" value="1" thumbLabel
-        (valueChange)="onVolumeChange($event)">
-      </mat-slider>
-    </div>
-
-    <div class="waveform-picker">
-      <h4>Waveform Picker</h4>
-      <mat-button-toggle-group (change)="onWaveformChange($event)">
-        <mat-button-toggle checked value="sine">sine</mat-button-toggle>
-        <mat-button-toggle value="sawtooth">sawtooth</mat-button-toggle>
-        <mat-button-toggle value="square">square</mat-button-toggle>
-        <mat-button-toggle value="triangle">triangle</mat-button-toggle>
-      </mat-button-toggle-group>
-    </div>
-
-  </div>
-
-  <div class="adsr-envelope">
-        <div class="adsr-slider">
-          <h4>Attack Duration = {{attackDuration.value}} sec.</h4>
-          <mat-slider #attackDuration [(value)]="adsrOptions.attack.duration" color="primary" min="0" max="1"
-            step="0.01" thumbLabel></mat-slider>
-        </div>
-        <div class="adsr-slider">
-          <h4>Attack Starting Value = {{attackStart.value | percent}}</h4>
-          <mat-slider #attackStart [(value)]="adsrOptions.attack.startingValue" color="primary" min="0" max="1"
-            step="0.01" thumbLabel></mat-slider>
-        </div>
-        <div class="adsr-slider">
-          <h4>Decay Duration = {{decayDuration.value}} sec.</h4>
-          <mat-slider #decayDuration [(value)]="adsrOptions.decay.duration" color="primary" min="0" max="1" step="0.01"
-            thumbLabel></mat-slider>
-        </div>
-        <div class="adsr-slider">
-          <h4>Decay Starting Value = {{decayStart.value | percent}}</h4>
-          <mat-slider #decayStart [(value)]="adsrOptions.decay.startingValue" color="primary" min="0" max="1"
-            step="0.01" thumbLabel></mat-slider>
-        </div>
-        <div class="adsr-slider">
-          <h4>Sustain Starting Value = {{sustainStart.value | percent}}</h4>
-          <mat-slider #sustainStart [(value)]="adsrOptions.sustain.startingValue" color="primary" min="0" max="1"
-            step="0.01" thumbLabel></mat-slider>
-        </div>
-        <div class="adsr-slider">
-          <h4>Release Duration = {{releaseDuration.value}} sec.</h4>
-          <mat-slider #releaseDuration [(value)]="adsrOptions.release.duration" color="primary" min="0" max="1"
-            step="0.01" thumbLabel></mat-slider>
-        </div>
-  </div>
-
-</div> -->
-
-<app-workspace class="item"
-  [componentsList]="inputList" 
+<app-workspace
+  class="item"
+  [componentsList]="inputList"
   [maxWindowCount]="1"
   (componentRefsUpdated)="onInputRefsUpdated($event)"
 >
 </app-workspace>
 
-<hr>
+<div class="separator"><h2 style="color: #c2185b">Filters Section</h2></div>
 
-<app-workspace 
-  [componentsList]="filterList" 
+<app-workspace
+  [componentsList]="filterList"
   [maxWindowCount]="-1"
   (componentRefsUpdated)="onFilterRefsUpdated($event)"
 >

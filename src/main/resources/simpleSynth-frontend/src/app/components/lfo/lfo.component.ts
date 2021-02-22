@@ -1,4 +1,11 @@
-import { Component, Input, OnChanges, OnDestroy, OnInit, SimpleChanges } from '@angular/core';
+import {
+  Component,
+  Input,
+  OnChanges,
+  OnDestroy,
+  OnInit,
+  SimpleChanges,
+} from '@angular/core';
 import { LFONode } from 'src/app/models/lfo-node';
 import { NodeLikeComponent } from 'src/app/models/node-like-component';
 import { makeid } from 'src/app/utils/random-alphanumeric';
@@ -6,7 +13,7 @@ import { makeid } from 'src/app/utils/random-alphanumeric';
 @Component({
   selector: 'app-lfo',
   templateUrl: './lfo.component.html',
-  styleUrls: ['./lfo.component.css']
+  styleUrls: ['./lfo.component.css'],
 })
 export class LFOComponent
   extends NodeLikeComponent
@@ -17,12 +24,12 @@ export class LFOComponent
 
   constructor() {
     super(new LFONode(new AudioContext()));
-   }
-  
+  }
+
   ngOnInit(): void {
     this.node = new LFONode(this.data.context);
   }
-  
+
   ngOnChanges(changes: SimpleChanges): void {
     this.node = new LFONode(this.data.context);
   }
@@ -34,7 +41,6 @@ export class LFOComponent
   onSliderToggled(toggle: any): void {
     if (toggle.checked) {
       (this.node as LFONode).enable();
-      
     } else {
       (this.node as LFONode).disable();
     }

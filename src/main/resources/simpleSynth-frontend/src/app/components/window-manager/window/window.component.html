@@ -1,18 +1,26 @@
-<mat-card class="item" style="margin: 15px;">
-
-  <mat-card-title>
-    ID: {{id}}
-  </mat-card-title>
-
+<mat-card class="item" style="margin: 15px">
   <mat-card-title>
     <!-- TODO: make this prettier -->
-    {{ componentRef.componentType.name }}
+    {{ componentRef.componentType.name.toString() }}
   </mat-card-title>
 
   <!-- The actual dynamically generated view -->
   <mat-card-content>
     <ng-template appAnchorHost></ng-template>
   </mat-card-content>
+
+  <mat-card-footer>
+    <div
+      style="
+        margin-left: 10px;
+        color: #c2185b;
+        opacity: 75%;
+        margin-bottom: 10px;
+      "
+    >
+      ID: {{ id }}
+    </div>
+  </mat-card-footer>
 
   <mat-card-actions class="frame">
     <button mat-icon-button class="frame-left" (click)="onMove('move_left')">
@@ -21,7 +29,7 @@
     <button mat-icon-button class="frame-left" (click)="onMove('move_right')">
       <mat-icon>arrow_forward</mat-icon>
     </button>
-    <div style="flex-grow: 2;"></div>
+    <div style="flex-grow: 2"></div>
     <button mat-icon-button class="frame-right" (click)="onMinimize()">
       <mat-icon>minimize</mat-icon>
     </button>
@@ -32,5 +40,5 @@
       <mat-icon>close</mat-icon>
     </button>
   </mat-card-actions>
-
+  
 </mat-card>
