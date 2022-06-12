@@ -122,7 +122,6 @@
       }
     }
   },
-  "defaultProject": "simpleSynth-frontend",
   "cli": {
     "analytics": false
   }
